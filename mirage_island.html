@@ -30,6 +30,10 @@
             bars.setAttribute("id", "bars")
             bars.innerHTML = "・・・・"
 
+            const bar_img = document.createElement("img")
+            bar_img.setAttribute("id", "bar_img")
+            bar_img.setAttribute("src", "mini_bar.png")
+
             const dots = document.createElement("font")
             dots.setAttribute("id", "dots")
             dots.innerHTML = "..."
@@ -119,7 +123,9 @@
                     } else if(string[i] === "｜") {
                         dialogue_window.appendChild(br)
                     } else if(string[i] === "ー") {
-                        dialogue_window.appendChild(bars)
+                        console.log(bar_img)
+                        dialogue_window.appendChild(bar_img)
+                        console.log(bar_img)
                     } else if(string[i] === "。") {
                         dialogue_window.appendChild(dots)
                     } else {

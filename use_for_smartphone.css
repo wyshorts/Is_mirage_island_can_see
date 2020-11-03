@@ -33,6 +33,10 @@
         font-size: 1px;
         letter-spacing: -1px;
     }
+    #bar_img {
+        width:20px;
+        height:5px
+    }
 
 
 

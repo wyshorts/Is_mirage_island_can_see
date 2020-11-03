@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+    <!--
+    #exclamation {
+        width: 15px;
+        height:15px;
+        margin: 0px 1px
+    }
+    #inner {
+        padding-top:5px;
+        height: 48px;
+        /* japanese:20px english:3px emerald-english:8px*/
+        margin:0px 20px;
+        /* japanese:8px*/
+        border-radius:8px;
+        background-color:white;
+    }
+    #inner p {
+        margin:0px;
+    }
+    #outer {
+        width:400px;
+        height:53px;
+        margin:2px 10px;
+        /* ruby_sapphire: #A6D6FA emerald: #29ffce*/
+        border: 3px solid #A6D6FA;
+        border-radius:10px;
+        /* ruby_sapphire: #6CBDF1 emerald: #28DFC5*/
+        background-color:#6CBDF1;
+    }
+    #whether_can_see,#select_version,#select_language {
+        margin-top:30px;
+    }
+    #space {
+        padding-top:20px;
+    }
+    #hidden_panel_japanese {
+        position:absolute;
+        width: 15px;
+        height:15px;
+        top:45px;
+        left:134px;
+        background-color:white;
+    }
+    -->        
+    </style>
+    <script type="text/javascript">
+        window.onload = () => {
+
+            //既存タグ群
+            const innet_frame = document.getElementById("inner")
+            const outer_frame = document.getElementById("outer")
+            const dialogue_window = document.getElementById("dialogue")
+            const can_button = document.getElementById("can_see")
+            const cannot_button = document.getElementById("cannot_see")
+            const select_version = document.getElementById("version")
+            const select_language = document.getElementById("language")
+
+            const img = document.createElement("img")
+            img.setAttribute("id", "exclamation")
+            img.setAttribute("src", "exclamation.png")
+
+            const br = document.createElement("br")
+
+            const bars = document.createElement("font")
+            bars.setAttribute("size", 0)
+            bars.innerHTML = "- - - - "
+
+            const dots = document.createElement("font")
+            dots.setAttribute("size", 3)
+            dots.innerHTML = "..."
+
+
+            //その他定数群(連想配列にする)
+            const string_dict = {
+                can_japanese: "　なっ、なんと！｜　きょうは　マボロシじま　みえるのじゃ！",
+                cannot_japanese: "　きょうは　マボロシじま　みえんのうー",
+                can_english: "　Oh! Oh my!｜　I can see MIRAGE ISRAND today!",
+                cannot_english: "　I can't see MIRAGE ISLAND today。"
+            }
+
+            //その他変数群
+            let i=0
+            let string = String()
+            let version = "ruby_sapphire"
+            let language = "japanese"
+
+            //関数群
+            //文字取得(which){ whichや言語変数からキーを作成し、連想配列から参照した文字列を返す }
+            function get_string(which) {
+                key = which + "_" + language
+                return string_dict[key]
+            }
+
+            //ボタンの使用を制限する関数
+            function buttons_disable(TF) {
+                if(TF) {
+                    can_button.disabled = true
+                    cannot_button.disabled = true
+                } else {
+                    can_button.disabled = false
+                    cannot_button.disabled = false
+                }
+            }
+
+            //デザイン変更関数
+            function change_design(version, language, dialogue_window) {
+                    /*
+                        ruby-japanese       青色    太い
+                        ruby-english        青色    細い
+                        emerald-japanese    緑色    太い
+                        emerald-english     緑色    中くらい
+                    */
+                dialogue_window.innerHTML = ""
+
+                //ボーダー、背景色変更(バージョンで調べる)
+                /* ruby_sapphire: skyblue emerald: #29ffce*/
+                if(version == "ruby_sapphire") {
+                    outer_frame.style.border = "3px solid #A6D6FA"
+                    outer_frame.style.backgroundColor = "#6CBDF1"
+
+                } else {    //緑の背景
+                    outer_frame.style.border = "3px solid #29ffce"
+                    outer_frame.style.backgroundColor = "mediumturquoise"
+                }
+
+                //枠変更(言語、バージョンで調べる)
+                /* japanese:20px english:3px emerald-english:8px*/
+
+                if(language == "japanese") {   //太い枠
+                    inner.style.margin = "0px 20px"
+                } else {
+                    if(version == "ruby_sapphire") {
+                        inner.style.margin = "0px 3px"
+                    } else {
+                        inner.style.margin = "0px 8px"
+                    }
+                }
+            }
+
+            //描画(string)
+            function draw(dialogue_window, string) {
+                buttons_disable(true)
+                dialogue_window.innerHTML = ""
+                const id = setInterval(() => {
+                    const string_len = string.length -1
+                    /* バッファを更新し、一文字ずつ描画*/
+                    if(string[i] == "！") {
+                        dialogue_window.appendChild(img)
+                    } else if(string[i] === "｜") {
+                        dialogue_window.appendChild(br)
+                    } else if(string[i] === "ー") {
+                        dialogue_window.appendChild(bars)
+                    } else if(string[i] === "。") {
+                        dialogue_window.appendChild(dots)
+                    } else {
+                        dialogue_window.innerHTML += string[i]
+                    }
+                    i++
+                    if(i>string_len) {
+                        i=0
+                        buttons_disable(false)
+                        clearInterval(id);
+                    }
+                },12)
+
+            }
+
+
+            //イベント群
+            //各ボタンが押された -> 文字取得関数(canかcannot)、描画
+            can_button.addEventListener("click", () => {
+                string = get_string("can")
+                draw(dialogue_window, string)
+            })
+
+
+            cannot_button.addEventListener("click", () => {
+                string = get_string("cannot")
+                draw(dialogue_window, string)
+            })
+
+            //バージョン、言語の値が変更された -> 変数書き換え
+            select_version.addEventListener("change", (event) => {
+                version = event.target.value
+                console.log(version,language)
+                change_design(version, language, dialogue_window)
+            })
+
+            function setting(event, val) {
+                val = event.target.value
+            }
+
+            select_language.addEventListener("change", (event) => {
+                language = event.target.value
+                //setting(event, language)
+                console.log(version)
+                console.log(version,language)
+                change_design(version, language, dialogue_window)
+            })
+
+        }
+
+        /* 
+            言語、バージョンを変更したら適宜ウインドウのデザインも変更する(関数を呼び出す)
+            デザイン変更関数
+            {
+                今設定されているバージョン、言語をもとに、ウィンドウの大きさ、背景色を変更する
+            }
+        */
+    </script>
+</head>
+
+<body>
+    <div id="outer">
+        <div id="inner">
+            <p id="dialogue"></p>
+        </div>
+    </div>
+    <div id="space"></div>
+
+    <p id="whether_can_see" style="display:inline;">マボロシじま : </p>
+    <button id="can_see">見える</button>
+    <button id="cannot_see">見えない</button>
+    <br><div id="space"></div>
+
+    <p id="select_version" style="display:inline;">バージョン : </p>
+    <select name="version" id="version">
+        <option value="ruby_sapphire">ルビー/サファイア</option>
+        <option value="emerald">エメラルド</option>
+    </select>
+    <br><div id="space"></div>
+
+    <p id="select_language" style="display:inline;">言語選択 : </p>
+    <select name="language" id="language">
+        <option value="japanese">日本語</option>
+        <option value="english">英語</option>
+    </select>
+    
+    <p id="add_string"></p>
+</body>
+</html>

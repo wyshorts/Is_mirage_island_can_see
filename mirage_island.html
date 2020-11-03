@@ -2,65 +2,24 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <title>Document</title>
-    <style type="text/css">
-    <!--
-    #exclamation {
-        width: 15px;
-        height:15px;
-        margin: 0px 1px
-    }
-    #inner {
-        padding-top:5px;
-        height: 48px;
-        /* japanese:20px english:3px emerald-english:8px*/
-        margin:0px 20px;
-        /* japanese:8px*/
-        border-radius:8px;
-        background-color:white;
-    }
-    #inner p {
-        margin:0px;
-    }
-    #outer {
-        width:400px;
-        height:53px;
-        margin:2px 10px;
-        /* ruby_sapphire: #A6D6FA emerald: #29ffce*/
-        border: 3px solid #A6D6FA;
-        border-radius:10px;
-        /* ruby_sapphire: #6CBDF1 emerald: #28DFC5*/
-        background-color:#6CBDF1;
-    }
-    #whether_can_see,#select_version,#select_language {
-        margin-top:30px;
-    }
-    #space {
-        padding-top:20px;
-    }
-    #hidden_panel_japanese {
-        position:absolute;
-        width: 15px;
-        height:15px;
-        top:45px;
-        left:134px;
-        background-color:white;
-    }
-    -->        
-    </style>
+    <link rel="stylesheet" href="use_for_pc.css" />
+    <link rel="stylesheet" href="use_for_smartphone.css" />
     <script type="text/javascript">
         window.onload = () => {
 
             //既存タグ群
             const innet_frame = document.getElementById("inner")
             const outer_frame = document.getElementById("outer")
-            const dialogue_window = document.getElementById("dialogue")
             const can_button = document.getElementById("can_see")
             const cannot_button = document.getElementById("cannot_see")
             const select_version = document.getElementById("version")
             const select_language = document.getElementById("language")
 
+            const dialogue_window = document.getElementById("dialogue")
+
+            //追加タグ群
             const img = document.createElement("img")
             img.setAttribute("id", "exclamation")
             img.setAttribute("src", "exclamation.png")
@@ -68,12 +27,17 @@
             const br = document.createElement("br")
 
             const bars = document.createElement("font")
-            bars.setAttribute("size", 0)
-            bars.innerHTML = "- - - - "
+            bars.setAttribute("id", "bars")
+            bars.innerHTML = "・・・・"
 
             const dots = document.createElement("font")
-            dots.setAttribute("size", 3)
+            dots.setAttribute("id", "dots")
             dots.innerHTML = "..."
+
+
+            if(screen.width <= 420) {
+                bars.innerHTML = "‥‥"
+            }
 
 
             //その他定数群(連想配列にする)

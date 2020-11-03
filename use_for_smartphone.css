@@ -1,0 +1,54 @@
+@media screen and (max-width:420px) {
+    #exclamation {
+        width: 8px;
+        height:8px;
+    }
+    #inner {
+        height: 36px;
+        /* japanese:20px english:3px emerald-english:8px*/
+        margin:0px 20px;
+        /* japanese:8px*/
+        border-radius:8px;
+        background-color:white;
+    }
+
+    #outer {
+        width:300px;
+        height:36px;
+        margin:2px 10px;
+        /* ruby_sapphire: #A6D6FA emerald: #29ffce*/
+        border: 3px solid #A6D6FA;
+        border-radius:10px;
+        /* ruby_sapphire: #6CBDF1 emerald: #28DFC5*/
+        background-color:#6CBDF1;
+    }
+
+    #dialogue {
+        padding-top:4px;
+        font-size:10px;
+        margin:0px;
+    }
+
+    #bars {
+        font-size: 1px;
+        letter-spacing: -0.3em;
+    }
+
+
+
+    select {
+        font-size: 16px;
+        transform: scale(0.8);
+    }
+
+    #whether_can_see,#select_version,#select_language {
+        margin-top:30px;
+    }
+
+
+    #space {
+        padding-top:20px;
+    }
+
+
+}

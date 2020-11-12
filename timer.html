@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        window.onload = () => {
+
+            const timer = document.getElementById("timer")
+
+            const my_date = new Date(2020, 11, 1, 0, 0, 0, 0)
+            const finish_text = "11月は終了！再設定してね"
+
+            for(let i=0;i<1;i++) {
+                // if(Date.now() > date.getTime()) {
+                //     timer.innerHTML = finish_text
+                //     break
+                // }                // console.log(delta)
+                // console.log(Math.floor(delta/60000))
+                // console.log(my_date.getSeconds() + "秒," + now.getSeconds() + "秒," + Math.floor(delta/1000)%60)
+                // console.log(my_date.getMilliseconds() + "ミリ秒," + now.getMilliseconds() + "ミリ秒," + delta%1000)
+
+                // let date = my_date.getDate - now.getDate()
+                // let hour = my_date.getHours() - now.getHours()
+                // let minute = my_date.getMinutes() - now.getMinutes()
+                // let second = my_date.getSeconds() - now.getSeconds()
+                // let milli_second = my_date.getMilliseconds() - now.getMilliseconds()
+                // let string = String(date + "日" + hour + "時間" + minute + "分" + second + "秒" + milli_second + "ミリ秒")
+                // console.log(string)
+            }
+
+            let i=0
+            let interval = setInterval(() => {
+                    let now = new Date(Date.now())
+                    let delta = my_date.getTime() - now.getTime()
+    
+                    let date = String(Math.floor(delta / 86400000) % 30)
+                    let hour = String(Math.floor(delta / 3600000) % 24)
+                    let minute = String(Math.floor(delta / 60000) % 60)
+                    let second = String(Math.floor(delta / 1000) % 60)
+                    let milli_second = String(delta % 1000)
+                    // let hour = my_date.getHours() - now.getHours()
+                    // let minute = my_date.getMinutes() - now.getMinutes()
+                    // let second = my_date.getSeconds() - now.getSeconds()
+                    // let milli_second = my_date.getMilliseconds() - now.getMilliseconds()
+
+
+                    timer.innerHTML = 
+                    "12月まであと..."+date+"日"+hour+"時間"+minute+"分"+second+"秒"+milli_second+"ミリ秒"
+                    if(delta <= 1) {
+                        timer.innerHTML = "11月は終了！再設定してね"
+                        clearInterval(interval)
+                    }
+                },1)
+
+
+
+        }
+        //期限ならtimerに文字買い手break
+//全部引き算、文章に
+//innerhtml
+
+    </script>
+</head>
+<body>
+    <p id="timer"></p>
+</body>
+</html>
